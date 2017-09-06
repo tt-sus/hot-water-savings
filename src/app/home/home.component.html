@@ -1,0 +1,117 @@
+
+<div class="container">
+  <div class="row result-image">
+    <div class="col-lg-5">
+      <div class="results">
+        <h2>
+            {{savings *100 |  number : '1.2-2'}} <span >%</span>
+        </h2> 
+        <p>
+          Total HW savings from heat <br>
+          recovery and low flow fixtures
+        </p>
+      </div>
+    </div>
+    <div class="col-lg-7">
+     <img src="https://firebasestorage.googleapis.com/v0/b/qaqc-f9eac.appspot.com/o/hw.png?alt=media&token=62895e3f-6acf-4b26-9124-5651735cfbb3" />
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="row user-inputs">
+      <div class="col-lg-5">
+          <div class="inputs">
+              <div class="row">
+                  <div class="col-lg-6"> </div>
+                <div class="col-lg-3">
+                  <label for="">Design</label>
+                </div>
+                <div class="col-lg-3">
+                    <label for="">Baseline</label>
+                </div>
+                </div>
+            <div class="row">
+              <div class="col-lg-6">
+              <p class="label">Total Water Usage</p>
+              </div>
+              <div class="col-lg-3">
+                <input type="number" [(ngModel)]="TotalWaterUsage_d" (keyup)="calculate()"><span class="units"> Kgal </span>
+              </div>
+              <div class="col-lg-3">
+                <input type="number" [(ngModel)]="TotalWaterUsage_b" (keyup)="calculate()"><span class="units"> Kgal </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+              <p class="label">Total Shower Usage</p>
+              </div>
+              <div class="col-lg-3">
+                <input type="number" [(ngModel)]="showerUsage_per_d" (keyup)="calculate()" > <span class="units"> % </span>
+              </div>
+              <div class="col-lg-3">
+                {{showerUsage_per_d}} <span class="units"> % </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+              <p class="label">Hot-Cold Water Ratio</p>
+              </div>
+              <div class="col-lg-3">
+                <input type="number" [(ngModel)]="hcRatio_s_d" (keyup)="calculate()"> 
+              </div>
+              <div class="col-lg-3">
+                <input type="number" [(ngModel)]="hcRatio_s_b"(keyup)="calculate()"> 
+              </div>
+            </div>
+            <p class="note margin">
+                Note:
+            </p>
+            <p class="note">
+                Total water usage is the output value from LEED WEp1 tool 
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="attributes">
+              <h3>RECOVERY ATTRIBUTES</h3>   
+              <div class="row">
+                  <div class="col-lg-6">
+                      <p>Recovery Effectiveness*</p>
+                  </div>
+                  <div class="col-lg-6">
+                    <input type="number" [(ngModel)]="re_d"(keyup)="calculate()"><span class="units"> % </span>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-6">
+                      <p>Recovered HW (from Power Pipe)**</p>
+                  </div>
+                  <div class="col-lg-6">
+                  {{rhw_d}}<span class="units"> Kgal </span>
+                  </div>
+                  <div class="clearfix"></div>
+              </div> 
+              <div class="row">
+                  <div class="col-lg-6">
+                      <p>DWHR Placement</p>
+                  </div>
+                  <div class="col-lg-6">
+                    <select type="text" [(ngModel)]="placement" id="category"(ngModelChange)="select()">
+                       <option *ngFor="let placement of placements" [ngValue]="placement.value">{{placement.name}}</option>
+                  </select>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>  
+              <p class="note">
+              Note:  
+              </p> 
+              <p class="note">
+                  * 55% effectiveness is determined for C4-72 model with 72" of pipe length. See attached performance curves from
+                  the manufacturers data.<br>
+                  ** Only three floors of the four dormitory floors will have Power-Pipe system therefore heat recovery is applied to
+                  75% of the showers only.  
+              </p>  
+          </div>
+        </div>
+  </div>
+</div>
