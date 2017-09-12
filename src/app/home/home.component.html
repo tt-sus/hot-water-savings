@@ -7,13 +7,29 @@
             {{savings *100 |  number : '1.2-2'}} <span >%</span>
         </h2> 
         <p>
-          Total HW savings from heat <br>
-          recovery and low flow fixtures
+         DHR + Low flow savings <br>
+          <b>Note:</b> Low flow savings  <br>
+          applies if used in Wep1.
+        </p>
+        <h2>
+            {{deltaT + tMains| number : '1.0-0'}}
+        </h2> 
+        <p>
+         Preheat Temperature
         </p>
       </div>
     </div>
     <div class="col-lg-7">
-     <img src="https://firebasestorage.googleapis.com/v0/b/qaqc-f9eac.appspot.com/o/hw.png?alt=media&token=62895e3f-6acf-4b26-9124-5651735cfbb3" />
+      <img 
+      *ngIf="placement.id==2"
+        src="https://firebasestorage.googleapis.com/v0/b/hot-water-savings.appspot.com/o/for%20heater%20only.png?alt=media&token=d0e08c9a-c8ab-4545-904b-f95881f8695f" />
+      <img 
+      *ngIf="placement.id==3"
+        src="https://firebasestorage.googleapis.com/v0/b/hot-water-savings.appspot.com/o/preheated%20cold%20water%20only.png?alt=media&token=01b4f35c-d4a6-4f16-a428-093aabb49fa6" />
+      <img 
+      *ngIf="placement.id==1"
+        src="https://firebasestorage.googleapis.com/v0/b/hot-water-savings.appspot.com/o/preheated%20cold%20water.png?alt=media&token=34eed71f-5ed3-48e4-866c-2a445f33ef53" />
+  
     </div>
   </div>
   <div class="clearfix"></div>
@@ -48,7 +64,7 @@
                 <input type="number" [(ngModel)]="showerUsage_per_d" (keyup)="calculate()" > <span class="units"> % </span>
               </div>
               <div class="col-lg-3">
-                {{showerUsage_per_d}} <span class="units"> % </span>
+                
               </div>
             </div>
             <div class="row">
@@ -62,12 +78,25 @@
                 <input type="number" [(ngModel)]="hcRatio_s_b"(keyup)="calculate()"> 
               </div>
             </div>
+            <p class="note ">
+                <b>Note:</b>
+            </p>
             <p class="note margin">
-                Note:
+                Total water usage is the output value for flow fixture from LEED WEp1 tool 
             </p>
-            <p class="note">
-                Total water usage is the output value from LEED WEp1 tool 
-            </p>
+            <!-- <div class="row">
+                <div class="col-lg-12">
+                <p class="label fixLabel">FixF:</p>
+                </div>
+                <div class="col-lg-12 fixf">
+                  <form>
+                    <input type="radio" (ngModelChange)="changeFixF('1')" [(ngModel)]="fixF" name="fixF" value="1"> All the showers in home are connected to DWHR units<br>
+                    <input type="radio" (ngModelChange)="changeFixF('0.5')"[(ngModel)]="fixF"  name="fixF" value="0.5"> 2 or more showers but only 1 shower is connected to DWHR unit
+                  </form>
+                </div>
+              </div> -->
+           
+
           </div>
         </div>
         <div class="col-lg-7">
@@ -83,34 +112,62 @@
                   <div class="clearfix"></div>
               </div>
               <div class="row">
-                  <div class="col-lg-6">
-                      <p>Recovered HW (from Power Pipe)**</p>
-                  </div>
-                  <div class="col-lg-6">
-                  {{rhw_d}}<span class="units"> Kgal </span>
-                  </div>
-                  <div class="clearfix"></div>
-              </div> 
+                <div class="col-lg-6">
+                    <p>% of Drain Heat Recovery</p>
+                </div>
+                <div class="col-lg-6">
+                  <input type="number" [(ngModel)]="perDHR"(keyup)="calculate()"><span class="units"> % </span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            
               <div class="row">
                   <div class="col-lg-6">
                       <p>DWHR Placement</p>
                   </div>
                   <div class="col-lg-6">
-                    <select type="text" [(ngModel)]="placement" id="category"(ngModelChange)="select()">
-                       <option *ngFor="let placement of placements" [ngValue]="placement.value">{{placement.name}}</option>
+                    <select type="text" [(ngModel)]="placement"(ngModelChange)="select()">
+                       <option *ngFor="let selectedPlacement of placements" [selected]="selectedPlacement.id===placement.id" [ngValue]="selectedPlacement">{{selectedPlacement.name}}</option>
                   </select>
                   </div>
                   <div class="clearfix"></div>
               </div>  
-              <p class="note">
-              Note:  
-              </p> 
-              <p class="note">
-                  * 55% effectiveness is determined for C4-72 model with 72" of pipe length. See attached performance curves from
-                  the manufacturers data.<br>
-                  ** Only three floors of the four dormitory floors will have Power-Pipe system therefore heat recovery is applied to
-                  75% of the showers only.  
-              </p>  
+              <!-- <div class="row">
+                  <div class="col-lg-6">
+                      <p># of Beds</p>
+                  </div>
+                  <div class="col-lg-6">
+                    <input type="number" [(ngModel)]="noBeds"(keyup)="calculate()">
+                  </div>
+                  <div class="clearfix"></div>
+              </div> -->
+              <div class="row">
+                  <div class="col-lg-6">
+                      <p>Piping Losses</p>
+                  </div>
+                  <div class="col-lg-6">
+                    <input type="number" [(ngModel)]="pLC"(keyup)="calculate()"><span class="units"> % </span>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-6">
+                      <p>Temperature of cold Water</p>
+                  </div>
+                  <div class="col-lg-6">
+                    <input type="number" [(ngModel)]="tMains"(keyup)="calculate()"><span class="units"> F </span>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                    <p>Temperature of hot Water</p>
+                </div>
+                <div class="col-lg-6">
+                  <input type="number" [(ngModel)]="DWHRinT"(keyup)="calculate()"><span class="units"> F </span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
           </div>
         </div>
   </div>
