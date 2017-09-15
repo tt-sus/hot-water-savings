@@ -13,3 +13,6 @@
     color: #777;
     
 }
+.navbar-toggler-right li {
+    margin-left:10px;
+}
