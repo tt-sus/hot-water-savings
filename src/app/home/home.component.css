@@ -25,15 +25,16 @@ label{
 }
 .inputs{
     background: #F7F7F7;
-    padding: 10px;
-    height: 263.8px;
+    padding: 30px;
+    height: 300px;
     font-size: 13px;
 }
 .attributes{
     background: #F7F7F7;
-    padding: 10px;
+    padding: 30px;
     margin-bottom: 20px;
     font-size: 13px;
+    height: 300px;
 }
 .attributes p{
     font-size: 13px;
